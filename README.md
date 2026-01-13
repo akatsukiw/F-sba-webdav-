@@ -86,7 +86,15 @@ chown -R root:root /var/www/dav
 
 ## 3. 编写大统一 Nginx 配置文件
 
-修改 `/etc/sing-box/nginx.conf`，将以下内容原样覆盖。
+修改 `/etc/sing-box/nginx.conf`，参考以下内容编辑覆盖。  
+关键需要添加  
+1. 加载 WebDAV 扩展模块`load_module /usr/lib/nginx/modules/ngx_http_dav_ext_module.so;`
+2.  解除全局上传大小限制（解决 Kazumi 报错）
+    `client_max_body_size 0;
+    proxy_request_buffering off;`
+3. 最后两个`server`模块。(server1原模块不用更改)
+4. 可以按需添加日志。
+
 
 ```nginx
 # 1. 加载 WebDAV 扩展模块
